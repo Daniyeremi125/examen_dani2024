@@ -20,11 +20,11 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: Color.fromARGB(255, 230, 240, 23), width: 2),
                 ),
-                // NO ME JALA LA IMAGEN PROFE
-                /* child: Image.network(
-                  'https://i.pinimg.com/564x/11/e6/94/11e6944cfa46a33d2e5dee895b3f7f43.jpg',
+                
+                  child: Image.asset(
+                  "assets/img/calculadora.png",
                   fit: BoxFit.contain,
-                ),*/
+                ),
               ),
               const SizedBox(height: 30),
               const Text(

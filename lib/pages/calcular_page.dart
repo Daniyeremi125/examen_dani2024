@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
 import 'prestamo.dart';
 
-class CalcularPage extends StatelessWidget {
+class CalcularPage extends StatefulWidget {
   const CalcularPage({super.key});
 
   @override
+  _CalcularPageState createState() => _CalcularPageState();
+}
+
+class _CalcularPageState extends State<CalcularPage> {
+  double loanAmount = 10000;
+  int loanPeriod = 24;
+  double annualInterestRate = 44;
+
+  double calculateMonthlyPayment(double principal, int months, double annualRate) {
+    double monthlyRate = annualRate / 12 / 100;
+    double factor = (1 + monthlyRate);
+    double denominator = 1 - (1 / factor);
+
+    for (int i = 0; i < months; i++) {
+      denominator *= factor;
+    }
+
+    return principal * monthlyRate / denominator;
+  }
+
+  double calculateTotalInterest(double monthlyPayment, double principal, int months) {
+    return monthlyPayment * months - principal;
+  }
+
+  @override
   Widget build(BuildContext context) {
-   
-    double loanAmount = 10000;
-    int loanPeriod = 24;
-    double annualInterestRate = 44;
-
-    double calculateMonthlyPayment(double principal, int months, double annualRate) {
-      double monthlyRate = annualRate / 12 / 100;
-      double factor = (1 + monthlyRate);
-      double denominator = 1 - (1 / factor);
-
-      
-      for (int i = 0; i < months; i++) {
-        denominator *= factor;
-      }
-
-      return principal * monthlyRate / denominator;
-    }
-
-    double calculateTotalInterest(double monthlyPayment, double principal, int months) {
-      return monthlyPayment * months - principal;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calculadora de Préstamos'),
@@ -40,7 +43,6 @@ class CalcularPage extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -69,7 +71,9 @@ class CalcularPage extends StatelessWidget {
                             min: 1000,
                             max: 50000,
                             onChanged: (value) {
-                              loanAmount = value;
+                              setState(() {
+                                loanAmount = value;
+                              });
                             },
                             activeColor: const Color(0xFFFFC107),
                             inactiveColor: Colors.grey,
@@ -86,7 +90,6 @@ class CalcularPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -115,7 +118,9 @@ class CalcularPage extends StatelessWidget {
                             min: 6,
                             max: 36,
                             onChanged: (value) {
-                              loanPeriod = value.toInt();
+                              setState(() {
+                                loanPeriod = value.toInt();
+                              });
                             },
                             activeColor: const Color(0xFFFFC107),
                             inactiveColor: Colors.grey,
@@ -132,7 +137,6 @@ class CalcularPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -161,7 +165,9 @@ class CalcularPage extends StatelessWidget {
                             min: 10,
                             max: 50,
                             onChanged: (value) {
-                              annualInterestRate = value;
+                              setState(() {
+                                annualInterestRate = value;
+                              });
                             },
                             activeColor: const Color(0xFFFFC107),
                             inactiveColor: Colors.grey,
@@ -183,7 +189,6 @@ class CalcularPage extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {
-             
                 double monthlyPayment = calculateMonthlyPayment(loanAmount, loanPeriod, annualInterestRate);
                 double totalInterest = calculateTotalInterest(monthlyPayment, loanAmount, loanPeriod);
                 double totalPayment = loanAmount + totalInterest;
