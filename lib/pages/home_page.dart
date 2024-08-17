@@ -1,23 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:examen_dani2024/pages/calcular_page.dart';
-
-void main() => runApp(const HomePage());
+import 'calcular_page.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Calculadora de Préstamos',
-      home: const LoanCalculatorScreen(),
-    );
-  }
-}
-
-class LoanCalculatorScreen extends StatelessWidget {
-  const LoanCalculatorScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,19 +18,17 @@ class LoanCalculatorScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFFFC107), width: 2),
+                  border: Border.all(color: Color.fromARGB(255, 230, 240, 23), width: 2),
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    'assets/images/prestamo.png', // Reemplaza con la ruta correcta de tu imagen
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                // NO ME JALA LA IMAGEN PROFE
+                /* child: Image.network(
+                  'https://i.pinimg.com/564x/11/e6/94/11e6944cfa46a33d2e5dee895b3f7f43.jpg',
+                  fit: BoxFit.contain,
+                ),*/
               ),
               const SizedBox(height: 30),
               const Text(
-                'Calculadora de Préstamos',
+                'Calculadora de prestamos',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 28,
@@ -56,7 +38,7 @@ class LoanCalculatorScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const Text(
-                'Obtenga un préstamo bancario con solo unos pocos clics',
+                'Obtenga un prestamo bancario con solo unos cuantos clicks ',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -66,7 +48,11 @@ class LoanCalculatorScreen extends StatelessWidget {
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () {
-                  // Acción al presionar el botón
+                
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CalcularPage()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
@@ -78,10 +64,10 @@ class LoanCalculatorScreen extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    Icon(Icons.play_arrow, color: Color(0xFFFFC107)),
+                    Icon(Icons.play_arrow, color: Color.fromARGB(255, 230, 233, 11)),
                     SizedBox(width: 10),
                     Text(
-                      'Empezar',
+                      'Siguiente',
                       style: TextStyle(fontSize: 18),
                     ),
                   ],
@@ -91,6 +77,28 @@ class LoanCalculatorScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ItemComponentWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0, 2),
+            blurRadius: 4,
+          ),
+        ],
+      ),
+      child: Text('Item Component'),
     );
   }
 }
